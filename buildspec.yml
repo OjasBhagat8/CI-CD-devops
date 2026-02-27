@@ -14,11 +14,10 @@ phases:
       - mvn -B clean test package
       - JAR_FILE=$(ls target/*.jar | grep -v "original" | head -n 1)
       - cp "$JAR_FILE" application.jar
-      - zip artifact.zip application.jar
 
 artifacts:
   files:
-    - artifact.zip
+    - application.jar
   discard-paths: yes
 
 cache:

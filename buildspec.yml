@@ -1,0 +1,25 @@
+version: 0.2
+
+env:
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=/root/.m2/repository"
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+
+  build:
+    commands:
+      - mvn -B clean test package
+      - JAR_FILE=$(ls target/*.jar | grep -v "original" | head -n 1)
+      - cp "$JAR_FILE" application.jar
+
+artifacts:
+  files:
+    - application.jar
+  discard-paths: yes
+
+cache:
+  paths:
+    - '/root/.m2/**/*'
